@@ -42,27 +42,11 @@ class ProdutoController {
     }
 
     async cadastrar(req, res) {
-
         try {
-
-            const dadosProduto = {
-
-                ...req.body,
-
-                imagem: req.file
-                    ? req.file.filename
-                    : null
-            };
-
-            const resultado =
-                await ProdutoService.cadastrarProduto(
-                    dadosProduto
-                );
-
+            const dadosProduto = {...req.body, imagem: req.file ? req.file.filename : null};
+            const resultado = await ProdutoService.cadastrarProduto(dadosProduto);
             res.status(201).json(resultado);
-
         } catch (erro) {
-
             res.status(500).json({
                 sucesso: false,
                 mensagem: erro.message
@@ -71,28 +55,15 @@ class ProdutoController {
     }
 
     async atualizar(req, res) {
-
         try {
-
-            const dadosProduto = {
-                ...req.body
-            };
-
+            const dadosProduto = {...req.body};
             if (req.file) {
                 dadosProduto.imagem =
                     req.file.filename;
             }
-
-            const resultado =
-                await ProdutoService.atualizarProduto(
-                    req.params.id,
-                    dadosProduto
-                );
-
+            const resultado = await ProdutoService.atualizarProduto(req.params.id, dadosProduto);
             res.json(resultado);
-
         } catch (erro) {
-
             res.status(500).json({
                 sucesso: false,
                 mensagem: erro.message
